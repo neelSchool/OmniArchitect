@@ -1,0 +1,79 @@
+Sample Inputs and Their Meanings (Constraints)
+
+"Design a green city with lots of parks"
+
+Green Space: ~30% green space (based on typical "green city" notions).
+
+Building Height: No explicit constraint.
+
+Public Transport: Likely emphasized, but not specified.
+
+"Create a city with lots of high-rise buildings"
+
+Max Height: Likely up to ~200m (typical of modern high-rises).
+
+Green Space: No direct indication.
+
+Public Transport: Not mentioned, likely neglected.
+
+"A city with efficient public transport and green spaces"
+
+Public Transport: Strong emphasis on metro/subway, buses.
+
+Green Space: ~30% green space.
+
+Building Height: No direct constraint, assume typical urban heights.
+
+"Design a sustainable city with mixed-use buildings"
+
+Building Type: Mixed-use zoning.
+
+Green Space: Likely ~20-30%.
+
+Max Height: No direct constraint.
+
+"Create a city with a 1 billion dollar budget and 20% green space"
+
+Budget: 1 billion USD.
+
+Green Space: 20%.
+
+Max Height: No explicit constraint, assume typical urban development.
+
+"Design a city with skyscrapers near public transport"
+
+Max Height: Likely up to 200m (high-rise).
+
+Public Transport: Strong emphasis (proximity to stations).
+
+Green Space: Not mentioned.
+
+"A low-density city with lots of green space and wide streets"
+
+Green Space: Likely ~30-40% green space.
+
+Density: Low-density, suburban-style design.
+
+Public Transport: Neglected, focus on car infrastructure.
+
+"Design a city with affordable housing and public transport"
+
+Affordable Housing: Implies low-cost housing in high-density areas.
+
+Public Transport: Strong focus on transport (metro/bus).
+
+Green Space: No direct mention.
+
+"A city with sustainable buildings and energy-efficient features"
+
+Building Type: Sustainable, possibly energy-efficient designs.
+
+Green Space: Implied to be moderate (20-30%).
+
+Max Height: Not specified.
+
+"Create a city with 50% green space and tall buildings"
+
+Green Space: 50% green space.
+
+Max Height: Implied tall buildings, but not necessarily skyscrapers.
