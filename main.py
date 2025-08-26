@@ -5,7 +5,7 @@ from renderer.renderer import render_plan_3d
 
 def demo():
     parser = ConstraintParser()
-    test_input = "We want 25% green areas, full transit connectivity, and buildings under 45 meters."
+    test_input = "We want good public transport with option every 15 min. The city should have 35% Green space with gardens, open play area, water bodies."
     constraints = parser.parse(test_input)
 
     if "error" in constraints:
