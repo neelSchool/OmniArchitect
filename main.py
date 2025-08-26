@@ -1,9 +1,7 @@
-# main.py
-
 from parser.transformer_parser import ConstraintParser
-from parser.schema_utils import to_matrix
-from planner.city_planner import generate_plan
-from renderer.renderer import render_plan
+from planner.networkx_planner import generate_plan
+from renderer.renderer import render_plan_2d
+from renderer.renderer import render_plan_3d
 
 def demo():
     parser = ConstraintParser()
@@ -14,9 +12,12 @@ def demo():
         print("Parsing error:", constraints["error"])
         return
 
-    matrix = to_matrix(constraints)
-    plan = generate_plan(matrix)
-    render_plan(plan)
+    print("\n--- Parsed Constraints ---")
+    for k, v in constraints.items():
+        print(f"{k}: {v}")
+
+    plan_graph = generate_plan(constraints)
+    render_plan_3d(plan_graph)
 
 if __name__ == "__main__":
     demo()

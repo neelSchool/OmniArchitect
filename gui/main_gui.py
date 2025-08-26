@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import messagebox
 from parser.transformer_parser import ConstraintParser
 from parser.schema_utils import to_matrix
-from planner.city_planner import generate_plan
+from planner.abm_planner import generate_plan
 from renderer.renderer import render_plan
 
 class OmniArchitectGUI:
