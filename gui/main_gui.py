@@ -2,6 +2,10 @@
 
 import tkinter as tk
 from tkinter import messagebox
+from parser.transformer_parser import ConstraintParser
+from parser.schema_utils import to_matrix
+from planner.city_planner import generate_plan
+from renderer.renderer import render_plan
 
 class OmniArchitectGUI:
     def __init__(self, root):
@@ -17,21 +21,33 @@ class OmniArchitectGUI:
         self.submit_button = tk.Button(root, text="Submit", command=self.on_submit)
         self.submit_button.pack(pady=10)
 
+        self.status_label = tk.Label(root, text="", fg="blue")
+        self.status_label.pack(pady=5)
+
+        self.parser = ConstraintParser()
+
     def on_submit(self):
         user_input = self.text_input.get("1.0", tk.END).strip()
         if not user_input:
             messagebox.showwarning("Input Error", "Please enter a description.")
             return
 
-        print("User Input Received:")
-        print(user_input)
+        self.status_label.config(text="Parsing input...")
+        constraints = self.parser.parse(user_input)
 
-        # Placeholder for sending to parser
-        # parsed = parse_input(user_input)
-        # planner.generate_city(parsed)
-        # renderer.render(parsed_city)
+        if "error" in constraints:
+            messagebox.showerror("Parser Error", "Failed to extract constraints.")
+            return
 
-        messagebox.showinfo("Input Received", "Thank you! Input received and will be processed.")
+        self.status_label.config(text="Building plan...")
+        matrix = to_matrix(constraints)
+        plan = generate_plan(matrix)
+
+        self.status_label.config(text="Rendering...")
+        render_plan(plan)
+
+        messagebox.showinfo("Done", "City plan rendered successfully.")
+        self.status_label.config(text="Done.")
 
 if __name__ == "__main__":
     root = tk.Tk()

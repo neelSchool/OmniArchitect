@@ -1,4 +1,4 @@
-#!/home/neel/Documents/OmniArchitect/venv/bin/python
+#!/home/neel/OmniArchitect/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
