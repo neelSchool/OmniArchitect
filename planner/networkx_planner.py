@@ -1,49 +1,73 @@
-# planner/networkx_planner.py
-
 import networkx as nx
 import random
+
+# Clamp value within min/max if clamp is defined
+def clamp_value(key, val):
+    CLAMPS = {
+        "population_density": (1000, 20000),
+        "green_area_ratio": (0.0, 0.6),
+        "road_network_density": (0.1, 1.0),
+        "max_building_height": (10, 100),
+        "water_bodies": (0, 5),
+        "industrial_zone_ratio": (0.0, 0.5),
+        "commercial_zone_ratio": (0.0, 0.5),
+        "recreational_zone_ratio": (0.0, 0.5),
+        "air_quality_index": (0, 150),
+        "noise_pollution_level": (0.0, 1.0)
+    }
+    if key in CLAMPS:
+        min_val, max_val = CLAMPS[key]
+        return max(min(val, max_val), min_val)
+    return val
+
 
 def generate_plan(constraints):
     G = nx.Graph()
 
-    num_parks = int(constraints.get("green_area_ratio", 0.2) * 20)
-    num_transit = int(constraints.get("transit_connectivity", 0.5) * 15)
-    num_buildings = 30
-    max_height = constraints.get("max_building_height", 30)
+    # Apply clamping
+    for key in constraints:
+        constraints[key] = clamp_value(key, constraints[key])
 
-    # Add parks
-    for i in range(num_parks):
-        G.add_node(f"park_{i}", type='park', height=None)
+    # Extract & interpret constraints
+    parks = int(constraints["green_area_ratio"] * 20)
+    transits = int(constraints["transit_connectivity"] * 15)
+    max_height = constraints["max_building_height"]
+    buildings = int(constraints["population_density"] / 1000)
+    industrial = int(constraints["industrial_zone_ratio"] * 10)
+    commercial = int(constraints["commercial_zone_ratio"] * 10)
+    recreation = int(constraints["recreational_zone_ratio"] * 10)
+    water_bodies = int(constraints["water_bodies"])
+    schools = int(constraints["education_access"] * 10)
+    hospitals = int(constraints["healthcare_access"] * 10)
+    services = int(constraints["public_service_access"] * 10)
+    waste_nodes = int(constraints["waste_management"] * 5)
+    smart_nodes = int(constraints["smart_infrastructure"] * 5)
+    roads_density = constraints["road_network_density"]
 
-    # Add transit nodes
-    for i in range(num_transit):
-        G.add_node(f"transit_{i}", type='transit', height=None)
+    # Add various node types
+    def add_nodes(count, label, height=None):
+        for i in range(count):
+            h = random.uniform(5, max_height) if height == 'random' else height
+            G.add_node(f"{label}_{i}", type=label, height=h)
 
-    # Add buildings with random height up to max_height
-    for i in range(num_buildings):
-        height = random.uniform(5, max_height)
-        G.add_node(f"building_{i}", type='building', height=height)
+    add_nodes(parks, "park")
+    add_nodes(water_bodies, "water")
+    add_nodes(transits, "transit")
+    add_nodes(buildings, "building", height='random')
+    add_nodes(commercial, "commercial", height='random')
+    add_nodes(industrial, "industrial", height='random')
+    add_nodes(recreation, "recreational")
+    add_nodes(schools, "school")
+    add_nodes(hospitals, "hospital")
+    add_nodes(services, "service")
+    add_nodes(waste_nodes, "waste")
+    add_nodes(smart_nodes, "smart_hub")
 
-    # Connect transit nodes randomly based on connectivity (simplified)
-    transit_nodes = [n for n, d in G.nodes(data=True) if d['type'] == 'transit']
-    for i in range(len(transit_nodes)):
-        for j in range(i + 1, len(transit_nodes)):
-            if random.random() < constraints.get("transit_connectivity", 0.5):
-                G.add_edge(transit_nodes[i], transit_nodes[j], type='transit_road')
-
-    # Connect buildings to nearest transit node (simplified)
-    for node, data in G.nodes(data=True):
-        if data['type'] == 'building':
-            if transit_nodes:
-                nearest = random.choice(transit_nodes)
-                G.add_edge(node, nearest, type='access_road')
-
-    # Connect parks with some roads
-    park_nodes = [n for n, d in G.nodes(data=True) if d['type'] == 'park']
-    for park in park_nodes:
-        # Connect each park to a random transit node for accessibility
-        if transit_nodes:
-            transit_node = random.choice(transit_nodes)
-            G.add_edge(park, transit_node, type='park_access')
+    # Connect nodes based on road density
+    nodes = list(G.nodes)
+    for i in range(len(nodes)):
+        for j in range(i + 1, len(nodes)):
+            if random.random() < roads_density * 0.05:
+                G.add_edge(nodes[i], nodes[j], type='road')
 
     return G

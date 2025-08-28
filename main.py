@@ -1,6 +1,5 @@
 from parser.transformer_parser import ConstraintParser
 from planner.networkx_planner import generate_plan
-from renderer.renderer import render_plan_2d
 from renderer.renderer import render_plan_3d
 
 def demo():
