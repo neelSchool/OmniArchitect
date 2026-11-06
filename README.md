@@ -49,7 +49,7 @@ OmniArchitect aims to bridge that gap by:
 
 ```bash
 # Clone and run
-git clone https://github.com/yourusername/OmniArchitect.git
+git clone https://github.com/neelSchool/OmniArchitect.git
 cd OmniArchitect
 pip install -r requirements.txt
 python3 main.py
@@ -69,5 +69,13 @@ firefox city_plan_3d.html
 ## Contact Info
 Feel free to contact me at **neel.mehendale@gmail.com** at any time whether it is about sponsorships, contributing or production usage.
 I will try my best to respond within 7 days to any requests with any information requested or request an online meeting to discuss your request further.
+
+## AI Usage Declaration
+Large Language Models (specifically ChatGPT-4) were used in 3 stages of this project. 
+1) For generating 20% (400/2000 samples) of the mock data to train the system to recognize variations in typed language, as there were limited free data sources available.
+2) For learning how to use and implement optimization tools in Python to enable better performance in sustainability metrics of the model.
+3) For research in to the major factors that affect rate and scale of development of architecture in urban, semi-urban and rural settings.
+
+The majority of the code was written by me (however both Syntax checkers and Visual Studio Code Auto Completion were used for Python syntax) as a challenge to see if I could successfully build an end to end system to provide an environmentally focused aid for housing and commercial developments in my area, and potentially in other cities, regions and countries. 
 
 - System, Explanations and Work by Neel Mehendale (as part of my Sustainability Initiative).
